@@ -2,9 +2,11 @@ import csv
 
 from django.db.models import Count
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 
-from moderator.moderate.models import Event, Vote, Question
+from moderator.moderate.models import Event, MozillianProfile, Question, Vote
 
 
 def export_questions_csv(modeladmin, request, queryset):
@@ -27,6 +29,13 @@ def export_questions_csv(modeladmin, request, queryset):
     return response
 
 
+admin.site.unregister(User)
+
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'asked_by', 'event')
+
+
 class QuestionInline(admin.StackedInline):
     model = Question
     readonly_fields = ('question', 'asked_by',)
@@ -39,9 +48,15 @@ class EventAdmin(admin.ModelAdmin):
     actions = [export_questions_csv]
 
 
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'asked_by', 'event')
+class UserProfileInline(admin.StackedInline):
+    model = MozillianProfile
+
+
+class UserProfileAdmin(UserAdmin):
+    inlines = [ UserProfileInline, ]
+
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(User, UserProfileAdmin)
 admin.site.register(Vote)
