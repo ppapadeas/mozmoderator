@@ -2,7 +2,7 @@ from django import forms
 from models import Question
 
 
-Q_PLACEHOLDER = 'Ask your question in 140 characters'
+Q_PLACEHOLDER = 'Ask your question in 250 characters'
 
 
 class QuestionForm(forms.ModelForm):
@@ -12,5 +12,5 @@ class QuestionForm(forms.ModelForm):
         fields = ['question']
         widgets = {
             'question': forms.TextInput(attrs={'placeholder': Q_PLACEHOLDER,
-                                               'maxlength': '140'})
+                                               'maxlength': '250'})
             }
