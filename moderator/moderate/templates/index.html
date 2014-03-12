@@ -8,20 +8,23 @@
 
 {% if user.is_authenticated() %}
   <hgroup id="main-feature" class="center">
-    <h2>Select event to view and ask questions.</h2>
+    <p>We all encounter things at work that make it hard to get stuff done; a set
+    of headphones that hurt your ears to broader issues like a slow internet
+    connection or meetings scheduled when you should be in bed. Big or small,
+    blockers make you ineffective and can sap your motivation.<p>
+    <h4>So, let’s do something about them.</h4>
   </hgroup>
   {% for event in events %}
     <a href="{{ url('event', e_slug=event.slug) }}">
       <div class="billboard event_listing">
         <h1>{{ event.name }}</h1>
-        <span class="questions_counter"> {{ event.questions.count() }} questions asked</span>
+        <span class="questions_counter"> {{ event.questions.count() }} experiences shared</span>
       </div>
     </a>
   {% endfor %}
 {% else %}
   <hgroup id="main-feature" class="center">
-    <h2>Let your voice be heard.</h2>
-    <p>Mozilla Moderator is a panel moderation system for submitting and voting on questions.</p>
+    <h2>Share your experience.</h2>
     <p>Please log in using your vouched mozillians.org account.</p>
   </hgroup>
 {% endif %}
