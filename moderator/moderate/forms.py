@@ -2,7 +2,7 @@ from django import forms
 from models import Question
 
 
-Q_PLACEHOLDER = 'What feedback do you have in regards to a move to Gmail? (in 300 chars)'
+Q_PLACEHOLDER = 'What feedback do you have in regards to a move to Gmail and Google Calendar? (in 300 chars)'
 
 
 class QuestionForm(forms.ModelForm):
