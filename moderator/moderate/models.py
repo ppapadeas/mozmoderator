@@ -47,7 +47,7 @@ class Question(models.Model):
     """Question relational model."""
     asked_by = models.ForeignKey(User)
     event = models.ForeignKey(Event, related_name='questions')
-    question = models.TextField(validators=[MaxLengthValidator(140),
+    question = models.TextField(validators=[MaxLengthValidator(300),
                                             MinLengthValidator(10)])
 
 

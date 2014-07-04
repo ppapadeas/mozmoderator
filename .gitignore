@@ -2,3 +2,5 @@
 moderator-db
 /moderator/static
 local_settings.py
+/env
+/src

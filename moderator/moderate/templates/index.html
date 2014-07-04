@@ -8,21 +8,21 @@
 
 {% if user.is_authenticated() %}
   <hgroup id="main-feature" class="center">
-    <h2>Select event to view and ask questions.</h2>
+    <!--<h2>Select event to view and ask questions.</h2>-->
   </hgroup>
   {% for event in events.order_by('-created_at') %}
     <a href="{{ url('event', e_slug=event.slug) }}">
       <div class="billboard event_listing">
         <h1>{{ event.name }}</h1>
-        <span class="questions_counter"> {{ event.questions.count() }} questions asked</span>
+        <span class="questions_counter"> {{ event.questions.count() }} feedbacks provided</span>
       </div>
     </a>
   {% endfor %}
 {% else %}
   <hgroup id="main-feature" class="center">
     <h2>Let your voice be heard.</h2>
-    <p>Mozilla Moderator is a panel moderation system for submitting and voting on questions.</p>
-    <p>Please log in using your vouched mozillians.org account.</p>
+    <p>In order to make a decision around the move to Gmail and Google calendaring by end of month, </br>we'd like feedback from staff about the move.</p>
+    <p>Login with your vouched mozillians.org account to continue.</p>
   </hgroup>
 {% endif %}
 
