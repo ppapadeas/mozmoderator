@@ -62,6 +62,8 @@ class Question(models.Model):
     event = models.ForeignKey(Event, related_name='questions')
     question = models.TextField(validators=[MaxLengthValidator(140),
                                             MinLengthValidator(10)])
+    reply = models.TextField(validators=[MaxLengthValidator(140)],
+                             null=True, blank=True)
 
     def __unicode__(self):
         return u'Question {pk} from {user}'.format(pk=self.id,
