@@ -18,7 +18,8 @@ from django.shortcuts import render, redirect
 
 from moderator.moderate.mozillians import is_vouched, BadStatusCodeError
 from moderator.moderate.models import Event, Question, Vote
-from moderator.moderate.forms import QuestionForm
+from moderator.moderate.forms import QuestionForm, ReplyForm
+from moderator.moderate.utils import is_admin
 
 
 class CustomVerify(Verify):
@@ -99,17 +100,26 @@ def archive(request):
 
 
 @login_required(login_url='/')
-def event(request, e_slug):
+def event(request, e_slug, q_id=None):
     """Render event questions."""
     event = Event.objects.get(slug=e_slug)
+    try:
+        reply = Question.objects.get(id=q_id)
+    except:
+        reply = None
 
     questions = (Question.objects.filter(event=event)
                  .annotate(vote_count=Count('votes'))
                  .order_by('-vote_count'))
 
     question_form = None
+    reply_form = None
+
     if not event.archived:
         question_form = QuestionForm(request.POST or None)
+
+        if is_admin(request.user):
+            reply_form = ReplyForm(request.POST or None, reply)
 
     if question_form and question_form.is_valid():
         question = question_form.save(commit=False)
@@ -121,12 +131,16 @@ def event(request, e_slug):
 
         return redirect(reverse('event', kwargs={'e_slug': event.slug}))
 
+    if reply and reply_form and reply_form.is_valid():
+        reply_form.save()
+
     return render(request, 'questions.html',
                   {'user': request.user,
                    'open': not event.archived,
                    'event': event,
                    'questions': questions,
-                   'q_form': question_form})
+                   'q_form': question_form,
+                   'r_form': reply_form})
 
 
 @login_required

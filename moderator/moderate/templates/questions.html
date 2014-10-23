@@ -67,4 +67,12 @@
   </div>
 {% endfor %}
 
+<div id="reply_form" style="display: none;">
+  <form method="post" action="">
+    {{ csrf() }}
+    {{ r_form.reply|safe }}
+    <input type="submit" class="button" value="submit">
+  </form>
+</div>
+
 {% endblock %}
