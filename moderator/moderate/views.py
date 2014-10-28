@@ -132,7 +132,9 @@ def event(request, e_slug, q_id=None):
         return redirect(reverse('event', kwargs={'e_slug': event.slug}))
 
     if reply and reply_form and reply_form.is_valid():
-        reply_form.save()
+        question = reply_form.save(commit=False)
+        question.event = event
+        question.save()
 
     return render(request, 'questions.html',
                   {'user': request.user,
