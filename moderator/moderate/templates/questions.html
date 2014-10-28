@@ -2,6 +2,8 @@
 
 {% block head %}
 <title>Mozilla Moderator - {{ event.name }}</title>
+
+<link rel="stylesheet" href="/static/css/reveal.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -62,17 +64,31 @@
             <span class="button vote" id="{{ q.id }}">support</span>
           {% endif %}
         {% endif %}
-    </div>
+        {% if user_is_admin(user) %}
+          <a class="button reply-button"
+                id="{{ q.id }}"
+                data-reveal-id="question-reply">
+            reply
+          </a>
+        {% endif %}
+      </div>
     </div>
   </div>
 {% endfor %}
 
-<div id="reply_form" style="display: none;">
-  <form method="post" action="">
-    {{ csrf() }}
-    {{ r_form.reply|safe }}
-    <input type="submit" class="button" value="submit">
-  </form>
+<!-- Modal for Question Reply -->
+<div id="question-reply" class="reveal-modal">
+  <div id="reply_form">
+    <form method="post" action="">
+      {{ csrf() }}
+      {{ r_form.reply|safe }}
+      <input type="submit" class="button" value="submit">
+    </form>
+  </div>
 </div>
+{% endblock %}
 
+{% block js %}
+    <script src="/static/js/libs/jquery.reveal.js"></script>
+    <script src="/static/js/questions.js"></script>
 {% endblock %}
