@@ -64,7 +64,7 @@
           {% else %}
             <span class="button vote" id="{{ q.id }}">support</span>
           {% endif %}
-          {% if user_is_admin(user) %}
+          {% if user_is_admin(user) and not q.reply %}
             <a class="button reply-button"
                   id="{{ q.id }}"
                   data-reveal-id="question-reply">

@@ -3,7 +3,7 @@ from models import Question
 
 
 Q_PLACEHOLDER = 'Ask your question in 140 characters'
-Q_ADMIN_PLACEHOLDER = 'Reply to question'
+Q_ADMIN_PLACEHOLDER = 'Reply to question in 140 characters'
 
 
 class QuestionForm(forms.ModelForm):
@@ -19,4 +19,8 @@ class QuestionForm(forms.ModelForm):
 
 class ReplyForm(forms.Form):
     """Reply Form."""
-    reply = forms.CharField(max_length=140)
+    reply = forms.CharField(max_length=140,
+                            widget=forms.Textarea(
+                                attrs={'placeholder': Q_ADMIN_PLACEHOLDER,
+                                       'maxlength': '140'}
+                            ))
